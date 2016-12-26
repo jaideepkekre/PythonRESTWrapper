@@ -1,2 +1,3 @@
 # PythonRESTWrapper
-Use this library to create CRUD rest APIs 
+Use this repo  to create CRUD rest APIs. 
+Starting with code examples from major frameworks like Flask etc.
