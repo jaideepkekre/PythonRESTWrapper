@@ -2,15 +2,17 @@
 from flask import request, Response
 from flask import Flask
 import json
+import bjoern
+import uuid
+import sqlite3
 
-
-
+import math
 APP = Flask(__name__)
 
 
-
+import time
 @APP.route('/', methods=['POST'])
-def route_function():
+def route_function_POST():
     """
     Function to handle "/" route POST call. Can create multiple functions to handle multiple routes.
     """
@@ -18,8 +20,16 @@ def route_function():
     return Response(json.dumps(body), status=200, mimetype='application/json')
 
     
-
+@APP.route('/', methods=['GET'])
+def route_function_GET():
+    """
+    Function to handle "/" route GET call. Can create multiple functions to handle multiple routes.  """
+    conn = sqlite3.connect('k.db')
+    conn.close()
+    return Response("done", status=200, mimetype='application/json')
 
 if __name__ == '__main__':
-    APP.run(host="0.0.0.0", port=8080, threaded=True)
-#gunicorn  -w 10 --threads 12 sampleFlaskApp:APP
+    print("running bjoern")
+    bjoern.run(APP, '0.0.0.0', 8080, reuse_port=True)
+
+    #gunicorn  -w 10 --threads 12 sampleFlaskApp:APP
