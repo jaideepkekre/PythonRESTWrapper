@@ -7,11 +7,11 @@ import uuid
 import sqlite3
 
 import math
-APP = Flask(__name__)
-
+app = Flask(__name__)
+import requests
 
 import time
-@APP.route('/', methods=['POST'])
+@app.route('/', methods=['POST'])
 def route_function_POST():
     """
     Function to handle "/" route POST call. Can create multiple functions to handle multiple routes.
@@ -20,16 +20,19 @@ def route_function_POST():
     return Response(json.dumps(body), status=200, mimetype='application/json')
 
     
-@APP.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def route_function_GET():
     """
+    print("in")
     Function to handle "/" route GET call. Can create multiple functions to handle multiple routes.  """
-    conn = sqlite3.connect('k.db')
-    conn.close()
+    # print("in")
+    r = requests.get('https://jsonplaceholder.typicode.com/posts/1')
+    # print(r)
     return Response("done", status=200, mimetype='application/json')
 
 if __name__ == '__main__':
     print("running bjoern")
-    bjoern.run(APP, '0.0.0.0', 8080, reuse_port=True)
+    app.run(port=8383)
+    # bjoern.run(app, '0.0.0.0', 8383, reuse_port=True)
 
     #gunicorn  -w 10 --threads 12 sampleFlaskApp:APP
